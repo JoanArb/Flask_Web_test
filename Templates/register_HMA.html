@@ -1,0 +1,747 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  /*background-image: url(https://www.hmablogs.com/wp-content/uploads/2021/09/background.jpg);*/
+  background-image: url(../static/images/background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
+/* align items center vertically and horizontally  */
+.container{
+  display: flex;
+  justify-content: center;
+  align-items:center !important;
+  height: 90vh; /* 100vh; */
+}
+.form{
+  width: 30%;	/* 350px; */
+  height: 80%;  /* 450px; */
+  background-color: rgba(41, 39, 39, 0.6); /*rgba(41, 39, 39, 0.3);*/
+  box-shadow: 0 5px 30px black;
+}
+
+.formGroupBtn { 	/* lo he añadido para centrar los botones de la clase btn del registro*/
+	margin-left: 10%;
+}
+
+.btn button {
+  padding: 3px;
+  margin: 30px 0px 40px 30px;
+  border-style: none;
+  background-color: transparent;
+  color: beige;
+  font-size: 18px;
+  font-weight: 550;
+}
+.formGroupbutton{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: -10%;
+}
+.formGroup input{
+  border: none;
+  margin-left: 5%; /* lo he añadido para centrar los textos del registro*/
+  width: 80%;
+  border-bottom: 2px solid white;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: transparent;
+  color: white;
+}
+input:focus {
+  outline: none !important;
+  border-bottom: 2px solid rgb(91, 243, 131);
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+}
+::placeholder {
+  color: white;
+}
+
+/*.checkBox{
+  display: flex;
+  justify-content: center;
+  margin: 16px!important;
+}*/
+ 
+#checkbox{
+  margin-left: 10%; /* lo he añadido para centrar los textos del registro*/
+  margin-right: 10px;
+  height: 15px;
+  width: 15px;
+}
+.text{
+  color: rgb(255,255,255); /* rgb(199, 197, 197);*/
+  font-size: 13px;
+}
+
+.btn2{
+  padding: 10px;
+  width: 150px;
+  border-radius: 20px;
+  background-color: rgb(10, 136, 43);
+  border-style: none;
+  color: white;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.btn2:hover{
+  background-color: rgba(10, 136, 43, 0.5);
+}
+.btn3{
+  padding: 10px;
+  width: 150px;
+  border-radius: 20px;
+  background-color: rgb(10, 136, 43);
+  border-style: none;
+  color: white;
+  font-weight: 600;
+  margin-left: 6px; /*lo he puesto para poder separar los dos botones*/
+}
+
+.btn3:hover{
+  background-color: rgba(10, 136, 43, 0.5);
+}
+
+.btn button:hover{
+  border-bottom: 2px solid rgb(91, 243, 131);
+}
+
+#forgot_password{
+  margin-left: 40%; 
+  margin-right: 10px;
+  /*height: 15px;
+  width: 15px;*/
+  font-size: 15px;
+}
+
+/* hide signup form */
+.login{
+  display: none;
+}
+ 
+/* Login form code */
+.login{
+  margin-top: 40px;
+}
+.login .checkBox{
+  margin-top: 30px !important;
+}
+
+</style>
+
+	<style>
+		.error {       
+			color: red;
+  			font-size: 16px !important;   /* 12px !important; */
+  			position: relative;
+  			top: -10px;
+  			left: 40px;
+		}
+		.error_checkbox {       
+			color: red;
+  			font-size: 16px !important;   /* 12px !important; */
+  			position: relative;
+  			top: 0px;
+  			left: 40px;
+		}
+ 
+		#successMessage {
+  			color: green;
+  			font-size:  20px !important;   /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20; /*110px;*/
+  			left: 40px; 
+		}
+
+		#successLoginMessage {
+  			color: green;
+  			font-size:  20px !important;   /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20; /*110px;*/
+  			left: 40px; 
+		}
+ 
+		#errorMessage {
+  			color: red;
+  			font-size:  20px !important;  /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20px;
+  			left: 40px; 
+		}
+
+		#errorLoginMessage {
+  			color: red;
+  			font-size:  20px !important;  /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20px;
+  			left: 40px; 
+		}
+
+		#forgotpasswordMessage {
+  			color: red;
+  			font-size:  20px !important;  /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20px;
+  			left: 40px; 
+		}
+
+		#userregistredMessage {
+  			color: red;
+  			font-size:  20px !important;  /* 15px !important; */
+  			display:none;
+  			position: relative;
+  			top: 20px;
+  			left: 40px; 
+		}
+	</style>
+
+</head>
+<body>
+	<!DOCTYPE html>
+	<html lang="en">
+	 
+	<head>
+	  <meta charset="UTF-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <!--<link rel="stylesheet" href="style.css">-->
+	 
+	  <!-- jQuery CDN Link -->
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <title>Transparent form</title>
+	</head>
+	 
+	<body>
+	  <div class="container">
+		<div class="form">
+			<!-- Success and Error messages, place at top of the form -->
+			<div id="successMessage">Congratulations! Registration completed.</div>
+			<div id="errorMessage"> <span>&#9888;</span> Error: some data is missing!  </div>
+			<div id="userregistredMessage"> <span>&#9888;</span> This user is registred yet  </div>
+			<div id="successLoginMessage">You are logged in.</div>
+			<div id="errorLoginMessage"> <span>&#9888;</span> Error: some data is wrong!  </div>
+			<div id="forgotpasswordMessage"> <span>&#9888;</span> Error: email is wrong!  </div>
+
+			<div class="formGroupBtn">
+		  		<div class="btn">
+					<button class="signUpBtn">SIGN UP</button>
+					<button class="loginBtn">LOG IN</button>
+		  		</div>
+			<div>
+			  
+		  	<form class="signUp" action="" method="get">
+				<div class="formGroup">
+			  		<input type="text" id="userName" placeholder="User Name" autocomplete="off">
+					<div class="error" id="usernameError"></div>
+					<div class="error" id="usernameMissing"></div>
+				</div>
+				<div class="formGroup">
+			  		<input type="email" id="email" placeholder="Email ID" name="email" required autocomplete="off">
+					<!--Paste it below the email input -->
+					<div class="error" id="emailError"></div>
+					<div class="error" id="emailMissing"></div>
+				</div>
+				<div class="formGroup">
+			  		<input type="password" id="password" placeholder="Password" required autocomplete="off">
+					<!--Paste it below the password input -->
+					<div class="error" id="passwordMissing"></div>
+				</div>
+				
+				<div class="formGroup">
+			  		<input type="password" id="confirmPassword" placeholder="Confirm Password" required autocomplete="off">
+					<!--Paste it below the Confirm password input -->
+					<div class="error" id="passwordConfirmlError"></div>
+				</div>
+				<div class="checkBox">
+			  		<input type="checkbox" name="checkbox" id="checkbox">
+			  		<span class="text">I agree with term & conditions</span>
+					<!--Paste it below the Checkbox input -->
+ 					<div class="error_checkbox" id="checkboxError"></div>
+				</div>
+				<div class="formGroupbutton">
+			  		<!--<button type="button" id="submitButton" class="btn2">REGISTER</button>
+					<button type="button" id="cancelButton" class="btn2">CANCEL</button>-->
+					<a id="submitButton" class="btn3 btn" role="button">REGISTER</a>			  		
+					<!--<a href="/" id="cancelButton" class="btn3 btn" role="button">CANCEL</a>-->
+				</div>	
+				<div class="formGroup my-3"> 
+                    <h8 style="color: white" >No tienes cuenta? <a href="#" style="color: rgb(150,180,255)">Regístrate</a></h8><br>
+                    <h8><a href="#" style="color: rgb(150,180,255)">Recuperar password</a></h8>
+                </div>
+		  	</form>
+			
+		  <!------ Login Form -------- -->
+		  	<!--<form class="login" action="#" method="get">-->
+			<form class="login" action="#">
+				<div class="formGroup">
+			  		<input type="email" id="loginemail" name="loginemail" placeholder="Email ID" required autocomplete="off">
+				</div>
+				<div class="formGroup">
+			  		<input type="password" id="loginpassword" placeholder="Password" required autocomplete="off">			 
+				</div>		
+				<a href="#" id="forgot_password" style="color: rgb(150,180,255)">I forgot my password</a>	
+				<div class="checkBox">
+			  		<input type="checkbox" name="checkbox" id="logincheckbox">
+			  		<span class="text">Keep me signed in on this device</span>
+				</div>
+				<div class="formGroupbutton">
+					<!--<button type="button" id="loginsubmitButton" class="btn2">REGISTER</button>
+					<button type="button" id="logincancelButton" class="btn2">CANCEL</button>-->
+					<a id="loginsubmitButton" class="btn3 btn" role="button">LOG IN</a>			  		
+					<!--<a href="/" id="logincancelButton" class="btn3 btn" role="button">CANCEL</a>--> 
+				</div>	 
+		  	</form>
+		</div>
+	  </div>
+	</body>
+</html>
+
+<script>
+// Document is ready
+$(document).ready(function () {
+	
+	/* Show login form on button click */
+	$('.loginBtn').click(function(){
+  		$('.login').show();
+  		$('.signUp').hide();
+  		/* border bottom on button click */
+  		$('.loginBtn').css({'border-bottom' : '2px solid #ff4141'});
+  		/* remove border after click */
+  		$('.signUpBtn').css({'border-style' : 'none'});
+	});
+ 
+	/* Show sign Up form on button click */ 
+	$('.signUpBtn').click(function(){
+  		$('.login').hide();
+  		$('.signUp').show();
+  		/* border bottom on button click */
+  		$('.signUpBtn').css({'border-bottom' : '2px solid #ff4141'});
+   		/* remove border after click */
+   		$('.loginBtn').css({'border-style' : 'none'});
+	});
+
+	/*-------------------------------  Los button Cancel sobran, ya que mantenemos el layout ----------------------------*/
+
+	/*$('#loginCancelButton').click(function(){
+		$.ajax({
+            url:"/hola",
+            type:"POST",
+            contentType: "application/json",
+        	data: ""});
+	});
+
+	$('#CancelButton').click(function(){
+		$.ajax({
+            url:"/hola",
+            type:"POST",
+            contentType: "application/json",
+        	data: ""});
+	});*/
+});
+</script>
+
+
+<script>
+
+// Document is ready
+$(document).ready(function () {
+
+	/*----------------------------------------------------------------------------------------
+	---------------------------------- Register ----------------------------------------------
+	------------------------------------------------------------------------------------------*/
+
+	$("#submitButton").click (function() {
+
+		$("#successLoginMessage").hide();
+		$("#errorLoginMessage").hide();
+		$("#forgotpasswordMessage").hide();
+
+  		var emailMissing = "";
+  		var passwordMissing = "";
+  		var emailErrorMessage = "";
+  		var passwordConfirmError = "";
+  		var checkboxError = "";
+		var usernameMissing = "";
+		var usernameError = "";
+		var userregistredMessage = "";
+		var userNotExistent = true;
+
+		//alert('soc dins3')
+
+		function CompararEmail_BaseDades() {
+            //' | safe' es necesario para que la variable (en este caso email_usuaris) sea exactamente igual que en python
+            emailProvaError = true;
+            
+            email_usuaris = "{{email_usuaris | safe}}"; //sirve para pasar una variable de python a jquery,... pero da un string
+            const emai = email_usuaris.slice(1, -1) //para quitar los corchetes de un string que PARECE array              
+            email_usuaris = []
+            email_usuaris = emai.split(','); //convertir el string sin corchetes en un VERDADERO array
+                               
+            $.each(email_usuaris, function(index, value) {                    
+                if (index == 0) { //lo del index=0 se hace por un problema de la primera comilla en email_usuaris[index].slice(1,-1) 
+                    //alert('dins index = 0')
+                    //alert('email base de dades: ' + email_usuaris[index].slice(1,-1) + ' email usuari: ' +  $("#email").val())
+                    if (email_usuaris[index].slice(1,-1) ==  $("#email").val()) {
+                    //alert('hi ha error')
+                    $('#emailexist').show();
+                    emailError = false;
+                    return false;
+                    } 
+                } else {
+                    //alert('dins index != 0')
+                    //alert('email base de dades: ' + email_usuaris[index].slice(1,-1).slice(1) + ' email usuari: ' +  $("#email").val())
+                    if (email_usuaris[index].slice(1,-1).slice(1) ==  $("#email").val()) {
+                        //alert('hi ha error')
+                        $('#emailexist').show();
+                        emailError = false;
+                        return false;
+                    }
+                }
+            });  
+            //alert(emailError)
+            return emailError;         
+        }
+
+
+		//let usernameValue = $('#userName').val();
+        if ($('#userName').val().length == '') {
+            usernameMissing = "User name is empty!";
+			$("#usernameMissing").html(usernameMissing);
+        } 
+		
+		if(($('#userName').val().length < 3)||($('#userName').val().length > 10)) {
+			usernameError = "length of username must be between 3 and 10";
+			$("#usernameError").html(usernameError);
+        }
+
+		if (usernameMissing != "") {         
+  			$("#usernameError").hide(); 
+  			$("#usernameMissing").show();
+		} else if (usernameError != "") {                 
+  			$("#usernameError").show(); 
+  			$("#usernameMissing").hide();
+		} else{
+  			$("#usernameError").hide(); 
+  			$("#usernameMissing").hide();
+		}
+ 
+  		/*----------------- Checking email validation --------------*/
+  		if ($("#email").val() == "") {
+    		emailMissing = "Email address is empty!";  
+    		$("#emailMissing").html(emailMissing); 
+		} 
+
+		function validateEmail(email) {  
+  			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  			return regex.test(email); 
+		}
+
+		if (validateEmail($("#email").val()) == false) {    
+  			emailErrorMessage = "Your email address is not valid";
+    		$("#emailError").html(emailErrorMessage);
+		}
+ 
+ 		/* Displaying email Error messages */
+ 		if (emailMissing != "") {         
+  			$("#emailError").hide(); 
+  			$("#emailMissing").show();
+		} else if (emailErrorMessage != "") {                 
+  			$("#emailError").show(); 
+  			$("#emailMissing").hide();
+		} else{
+  			$("#emailError").hide()
+  			$("#emailMissing").hide();
+		}
+	 
+		/*------------- Password validation ---------------------*/
+		if ($("#password").val() == "") {
+  			passwordMissing = "Password field is required!";
+  			$("#passwordMissing").html(passwordMissing);
+		}
+ 
+  		if ($("#password").val() != $("#confirmPassword").val()) {                  
+    		passwordConfirmError = "Your passwords don't match";
+    		$("#passwordConfirmlError").html(passwordConfirmError);
+  		}
+ 
+		/* Display password error message */
+		if (passwordMissing != "") {                   
+  			$("#passwordMissing").show(); 
+  			$("#passwordConfirmlError").hide(); 
+		} else if (passwordConfirmError != "") {                 
+  			$("#passwordConfirmlError").show();
+  			$("#passwordMissing").hide(); 
+		} else {
+  			$("#passwordConfirmlError").hide();
+  			$("#passwordMissing").hide(); 
+		}
+ 
+		/*-------------------- Checkbox click validation ----------------*/
+		if($('#checkbox').prop("checked") == false){
+  			checkboxError = "Must agree with our terms!";
+  			$('#checkboxError').html(checkboxError);
+		}
+		/* Display checkbox error */
+		if (checkboxError != "") {                   
+  			$("#checkboxError").show(); 
+		} else {                 
+  			$("#checkboxError").hide(); 
+		}
+ 
+		/*--------------- Display success message if there is no error ------------------------*/
+		//if (emailErrorMessage == "" && phoneErrorMessage == "" && passwordConfirmError == "" && checkboxError == "") {		 
+		if (emailErrorMessage == "" && passwordConfirmError == "" && checkboxError == "" && usernameError == "") {
+			//alert('comprovació de si ja existeix')
+			userNotExistent = CompararEmail_BaseDades();
+			//alert('No existeix?: ' + userNotExistent.toString())
+
+			if (userNotExistent == false) {
+				$("#successMessage").hide();
+  				$("#errorMessage").hide();
+				$("#userregistredMessage").show(); 
+			} else {
+				$("#userregistredMessage").hide();
+  				$("#successMessage").show();
+  				$("#errorMessage").hide();
+
+				//alert('crear variable usuarios y mandarla para la base de datos')
+        		var usuarios = new Array();
+				usuarios.push($('#userName').val());
+        		usuarios.push($('#email').val());
+    			usuarios.push($('#password').val());
+        		const dict_values = {usuarios}
+        		const s = JSON.stringify(dict_values);
+        		console.log(s);
+
+        		window.alert(s)
+        		$.ajax({
+            		url:"/add_user",
+            		type:"POST",
+            		contentType: "application/json",
+        			data: JSON.stringify(s)});
+			} 
+		} else {
+			$("#userregistredMessage").hide();
+			$("#successMessage").hide();
+  			$("#errorMessage").show();	
+		}
+	});
+
+	/*----------------------------------------------------------------------------------------
+	---------------------------------- Log in ---------------------------------------
+	------------------------------------------------------------------------------------------*/
+
+	$('#loginsubmitButton').click(function (e) {
+
+		$("#successLoginMessage").hide();
+		$("#successMessage").hide();
+		$("#userregistredMessage").hide();
+		$("#errorMessage").hide();
+		$("#errorLoginMessage").hide();
+		$("#forgotpasswordMessage").hide();
+
+		var userNotExistent = true;
+
+		function CompararEmail_Password_BaseDades() {
+            //' | safe' es necesario para que la variable (en este caso email_usuaris) sea exactamente igual que en python
+            loginError = true;
+            
+            email_usuaris = "{{email_usuaris | safe}}"; //sirve para pasar una variable de python a jquery,... pero da un string
+            password_usuaris = "{{password_usuaris | safe}}"; //sirve para pasar una variable de python a jquery,... pero da un string
+			const emai = email_usuaris.slice(1, -1) //para quitar los corchetes de un string que PARECE array              
+            const pass = password_usuaris.slice(1, -1) //para quitar los corchetes de un string que PARECE array
+			email_usuaris = []
+			password_usuaris = []
+            email_usuaris = emai.split(','); //convertir el string sin corchetes en un VERDADERO array
+			password_usuaris = pass.split(','); //convertir el string sin corchetes en un VERDADERO array
+                               
+            $.each(email_usuaris, function(index, value) {                
+                if (index == 0) { //lo del index=0 se hace por un problema de la primera comilla en email_usuaris[index].slice(1,-1) 
+                    //alert('dins index = 0')
+                    /*alert('email bd: ' + email_usuaris[index].slice(1,-1) + ' email user: ' +  $("#loginemail").val() +
+						' pass bd: ' + password_usuaris[index].slice(1,-1) + ' pass user: ' +  $("#loginpassword").val())*/
+                    if (email_usuaris[index].slice(1,-1) ==  $("#loginemail").val()) {
+						if (password_usuaris[index].slice(1,-1) ==  $("#loginpassword").val()) {
+                    		//alert('Log in successfully')
+                    		//$('#successLoginMessage').show();
+                    		loginError = false;
+                    		return false;
+						}
+                    } 
+                } else {
+                    //alert('dins index != 0')
+                    /*alert('email bd: ' + email_usuaris[index].slice(1,-1).slice(1) + ' email user: ' +  $("#loginemail").val() +
+						' pass bd: ' + password_usuaris[index].slice(1,-1).slice(1) + ' pass user: ' +  $("#loginpassword").val())*/
+                    
+					if (email_usuaris[index].slice(1,-1).slice(1) ==  $("#loginemail").val()) {
+						if (password_usuaris[index].slice(1,-1).slice(1) ==  $("#loginpassword").val()) {
+                        	//alert('Log in successfully')
+                        	//$('#successMessage').show();
+                        	loginError = false;
+                        	return false;
+						}
+                    }
+                }
+            });  
+            return loginError;         
+        }
+
+		//alert('comprovació de si ja existeix login')
+		userNotExistent = CompararEmail_Password_BaseDades();
+		//alert('No existeix login?: ' + userNotExistent.toString())
+		if (userNotExistent == true) {
+			$("#successLoginMessage").hide();
+			$("#errorLoginMessage").show();
+		} else {
+			$("#errorLoginMessage").hide();
+			$("#successLoginMessage").show();
+
+			//alert('crear variable usuarios')
+        	var usuarios = new Array();
+        	//usuarios.push($('#usernames').val());
+        	usuarios.push($('#loginemail').val());
+    		usuarios.push($('#loginpassword').val());
+        	const dict_values = {usuarios}
+        	const s = JSON.stringify(dict_values);
+        	console.log(s);
+
+        	window.alert(s)
+			$.ajax({
+            	url:"/login_user",
+            	type:"POST",
+            	contentType: "application/json",
+        		data: JSON.stringify(s)
+
+				//success:function(response){ document.write(response); }   
+				//la siguiente línea es vital... la información está en
+				//https://pythonprogramming.net/community/808/AJAX%20Post%20will%20not%20allow%20render_template%20or%20return%20redirect(url_for%20...)%20%20-%20SOLVED/
+				//success: function(e){ $('body').append(e);}
+				//success: function(response) {window.location.href = "/";}
+			
+			});
+			//e.preventDefault();
+		}            
+    });
+
+	/*----------------------------------------------------------------------------------------
+	---------------------------------- Forgot password ---------------------------------------
+	------------------------------------------------------------------------------------------*/
+
+	$("#forgot_password").click (function(){
+		
+		$("#successLoginMessage").hide();
+		$("#errorLoginMessage").hide();
+		$("#forgotpasswordMessage").hide();
+		var userNotExistent = true;
+
+		function CompararLoginEmail_BaseDades() {
+            //' | safe' es necesario para que la variable (en este caso email_usuaris) sea exactamente igual que en python
+            emailProvaError = true;
+            
+            email_usuaris = "{{email_usuaris | safe}}"; //sirve para pasar una variable de python a jquery,... pero da un string
+            const emai = email_usuaris.slice(1, -1) //para quitar los corchetes de un string que PARECE array              
+            email_usuaris = []
+            email_usuaris = emai.split(','); //convertir el string sin corchetes en un VERDADERO array
+                               
+            $.each(email_usuaris, function(index, value) {                    
+                if (index == 0) { //lo del index=0 se hace por un problema de la primera comilla en email_usuaris[index].slice(1,-1) 
+                    ///alert('dins index = 0')
+                    ///alert('email base de dades: ' + email_usuaris[index].slice(1,-1) + ' email usuari: ' +  $("#loginemail").val())
+                    if (email_usuaris[index].slice(1,-1) ==  $("#loginemail").val()) {
+                    ///alert('hi ha error')
+                    $('#emailexist').show();
+                    emailError = false;
+                    return false;
+                    } 
+                } else {
+                    ///alert('dins index != 0')
+                    ///alert('email base de dades: ' + email_usuaris[index].slice(1,-1).slice(1) + ' email usuari: ' +  $("#loginemail").val())
+                    if (email_usuaris[index].slice(1,-1).slice(1) ==  $("#loginemail").val()) {
+                        ///alert('hi ha error')
+                        $('#emailexist').show();
+                        emailError = false;
+                        return false;
+                    }
+                }
+            });  
+            //alert(emailError)
+            return emailError;         
+        }
+
+		function validateEmail(email) {  
+  			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  			return regex.test(email); 
+		}
+
+		alert('forgot password');
+
+		if ($("#loginemail").val() == "") {
+			///alert('email vuit');
+			$("#forgotpasswordMessage").show();
+		} else {
+			if (validateEmail($("#loginemail").val()) == false) {  
+				///alert('email dolent');  
+				$("#forgotpasswordMessage").show();
+			} else {
+				///alert('comprovació de si ja existeix')
+				userNotExistent = CompararLoginEmail_BaseDades();
+				///alert('No existeix?: ' + userNotExistent.toString())			
+
+				if (userNotExistent == true) {
+					/* el usuario no está registrado */
+				} else {
+					///alert('crear variable usuarios y mandarla para la base de datos')
+        			var usuarios = new Array();
+        			usuarios.push($('#loginemail').val());
+        			const dict_values = {usuarios}
+        			const s = JSON.stringify(dict_values);
+        			console.log(s);
+
+        			window.alert(s)
+        			$.ajax({
+            			url:"/forgot_password",
+            			type:"POST",
+            			contentType: "application/json",
+        				data: JSON.stringify(s)});
+				} 
+			}
+		}
+	})
+
+
+
+
+});
+</script>
+
+
+{% endblock %}

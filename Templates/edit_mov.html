@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="col-md-4 offset-md-4">
+    <div class="card card-body">
+        <!-- formulario relleno de los datos del elemento id (de la tabla movements de la bd salsa) cuyo button Edit se ha pulsado -->
+        <!-- en este formulario, al pulsar el button Save, se ejecuta (action) seguir la ruta update_mov -->
+        <form action="/update_mov/{{ moviment.0 }}" method='POST'>
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Video link" value="{{ moviment.1 }}" class="form-control">
+            </div>            
+            <div class="form-group">
+                <input type="text" name="title" placeholder="Title" value="{{ moviment.2 }}" class="form-control">
+            </div>            
+            <div class="form-group">
+                <input type="text" name="begin" placeholder="Begin" value="{{ moviment.3 }}" class="form-control">
+            </div>           
+            <div class="form-group">
+                <input type="text" name="end" placeholder="End" value="{{ moviment.4 }}" class="form-control">
+            </div>            
+            <div class="form-group">
+                <input type="text" name="dancer_m" placeholder="Dancer male" value="{{ moviment.5 }}" class="form-control">
+            </div>            
+            <div class="form-group">
+                <input type="text" name="dancer_f" placeholder="Dancer female" value="{{ moviment.6 }}" class="form-control">
+            </div> 
+            <div class="form-group">
+                <input type="text" name="i_dancer_m" placeholder="Info dancer male" value="{{ moviment.7 }}" class="form-control">
+            </div>    
+            <div class="form-group">
+                <input type="text" name="i_dancer_f" placeholder="Info dancer female" value="{{ moviment.8 }}" class="form-control">
+            </div>    
+            <div class="form-group">
+                <input type="text" name="social" placeholder="Social?" value="{{ moviment.9 }}" class="form-control">
+            </div>          
+            <div class="form-group">
+                <input type="text" name="place" placeholder="Location" value="{{ moviment.10 }}" class="form-control">
+            </div>    
+            <div class="form-group">
+                <input type="text" name="i_place" placeholder="Info location" value="{{ moviment.11 }}" class="form-control">
+            </div>  
+            <div class="form-group">
+                <input type="text" name="orig_video" placeholder="Orig video" value="{{ moviment.12 }}" class="form-control">
+            </div>      
+            <div class="form-group">
+                <input type="text" name="web_video" placeholder="Web video" value="{{ moviment.13 }}" class="form-control">
+            </div>  
+            <div class="form-group">
+                <input type="text" name="i_web_video" placeholder="Info web video" value="{{ moviment.14 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="sec_video" placeholder="Seconds video" value="{{ moviment.15 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="del_date" placeholder="Delete date" value="{{ moviment.16 }}" class="form-control">
+            </div>          
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block">
+                    Save
+                </button>
+            </div>            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

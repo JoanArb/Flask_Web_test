@@ -1,0 +1,139 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-3">
+
+        <!-- código para escribir en pantalla los mensajes flash que se envían en la aplicación flask_web-->
+        {% with messages = get_flashed_messages() %}  <!-- get_flashed_messages() sirve para capturar mensajes flash -->
+        {% if messages %}
+        {% for message in messages %}   
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }} 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <!-- formulario para rellenar la tabla movements de la base de datos salsa-->
+            <form action="/add_mov" method='POST'>
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Video link" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="title" placeholder="Title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="begin" placeholder="Begin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="end" placeholder="End" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_m" placeholder="Dancer male" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_f" placeholder="Dancer female" class="form-control">
+                </div>      
+                <div class="form-group">
+                    <input type="text" name="i_dancer_m" placeholder="Info dancer male" class="form-control">
+                </div>    
+                <div class="form-group">
+                    <input type="text" name="i_dancer_f" placeholder="Info dancer female" class="form-control">
+                </div>    
+                <div class="form-group">
+                    <input type="text" name="social" placeholder="Social?" class="form-control">
+                </div>  
+                <div class="form-group">
+                    <input type="text" name="place" placeholder="Location" class="form-control">
+                </div> 
+                <div class="form-group">
+                    <input type="text" name="i_place" placeholder="Info location" class="form-control">
+                </div>  
+                <div class="form-group">
+                    <input type="text" name="orig_video" placeholder="Original Video" class="form-control">
+                </div>            
+                <div class="form-group">
+                    <input type="text" name="web_video" placeholder="Web original video" class="form-control">
+                </div>    
+                <div class="form-group">
+                    <input type="text" name="i_web_video" placeholder="Info web original video" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="sec_video" placeholder="Seconds video" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="del_date" placeholder="Delete date" class="form-control">
+                </div>
+                <div class="form-group">            
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <!-- muestra los elementos de la tabla movements de la base de datos salsa-->
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Video Link</td>
+                    <td>title</td>
+                    <td>Begin</td>
+                    <td>End</td>                    
+                    <td>Dancer male</td>
+                    <td>Dancer female</td>
+                    <td>Info dancer male</td>
+                    <td>Info dancer female</td>
+                    <td>Social</td>
+                    <td>Location</td>
+                    <td>Info location</td>
+                    <td>Original Video</td>
+                    <td>Web Video</td>
+                    <td>Info Web Video</td>
+                    <td>Seconds Video</td>
+                    <td>Delete date</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for moviment in moviments %}
+                <tr>
+                    <td>{{ moviment.1}}</td>
+                    <td>{{ moviment.2}}</td>
+                    <td>{{ moviment.3}}</td>
+                    <td>{{ moviment.4}}</td>
+                    <td>{{ moviment.5}}</td>
+                    <td>{{ moviment.6}}</td>
+                    <td>{{ moviment.7}}</td>
+                    <td>{{ moviment.8}}</td>
+                    <td>{{ moviment.9}}</td>
+                    <td>{{ moviment.10}}</td>
+                    <td>{{ moviment.11}}</td>
+                    <td>{{ moviment.12}}</td>
+                    <td>{{ moviment.13}}</td>
+                    <td>{{ moviment.14}}</td>
+                    <td>{{ moviment.15}}</td>  
+                    <td>{{ moviment.16}}</td>
+                    <td>
+                        <a href="/edit_mov/{{moviment.0}}" class="btn btn-sm btn-secondary">Edit</a> <!-- moviment.0 es el id -->
+                    </td>
+                    <td>
+                        <a href="/del_mov/{{moviment.0}}" class="btn btn-sm btn-danger btn-delete">Delete</a> <!-- moviment.0 es el id -->
+                        <!-- la clase btn-delete se añade para seleccionar todos los botones delete. Esto permitirá que
+                            al pulsar cualquiera de ellos, se abra una ventana pidiendo confirmación antes de borrar -->
+                    </td>                  
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

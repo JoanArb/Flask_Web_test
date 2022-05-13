@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+  </head>
+  <body>    
+    <div class="container">
+      <div class="row">
+        
+        {% for pose in poses %}
+        <!--<div class="col-md-3">         
+          <div class="card">                 
+            <img src="static/uploads/positions/{{ pose }}"/>
+            <div class="card-body">           
+              <a href="/search_end/{{ pose }}" id="" class="btn btn-primary btn-sm" role="button">{{pose}}</a>
+            </div>         
+          </div>
+        </div>-->
+        
+        <div class="col-md-3">         
+          <div class="card mt-2 rounded-end">                          
+
+            <div class='zoom' id='ex3'>
+              <!--<p>{{pose}}</p>-->
+              <img src='static/uploads/positions/{{ pose }}' width='300' height='200' alt=''/>              
+	          </div>            
+            <div class="d-grid">              
+              <button type="submit" onclick="window.location.href='/search_end/{{ pose }}'" class="btn btn-primary">{{pose}}</button>
+            </div>     
+          </div>
+        </div>
+
+        {% endfor %} 
+
+      </div>
+    </div>
+  </body> 
+</html>
+
+{% endblock %}

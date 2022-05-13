@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-3">
+
+        <!-- código para escribir en pantalla los mensajes flash que se envían en la aplicación flask_web-->
+        {% with messages = get_flashed_messages() %}  <!-- get_flashed_messages() sirve para capturar mensajes flash -->
+        {% if messages %}
+        {% for message in messages %}   
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }} 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <!-- formulario para rellenar la tabla movements de la base de datos salsa-->
+            <form action="/add_mov" method='POST'>
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Video link" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="title" placeholder="Title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="begin" placeholder="Begin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="end" placeholder="End" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_m" placeholder="Dancer male" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_f" placeholder="Dancer female" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="place" placeholder="Location" class="form-control">
+                </div>               
+                <div class="form-group">
+                    <input type="text" name="orig_video" placeholder="Original video" class="form-control">
+                </div>    
+                <div class="form-group">            
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

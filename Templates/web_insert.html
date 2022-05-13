@@ -1,0 +1,206 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        /*background: #FF2222;*/
+        color: #ccc;
+      } 
+      div {
+        padding: 2px 10px;
+      }
+      input[type="button"] {
+        margin-top: 10px;
+      }
+      .linea
+      {
+        display: inline-block;
+      } 
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.2.min.js"
+        integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
+        crossorigin="anonymous">
+    </script>
+      <!--<script type="text/javascript" src="comprobarCheckBox.js"></script>-->
+  </head>
+  <body>    
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!--Primera de tres columnas-->
+            <!--<h1>DANCERS</h1>-->
+            <a href="/" id="" class="btn btn-primary linea" role="button">Exit</a>
+            <h4>
+           <!--   <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="All_dancers" name="" id="All_dancers">
+                <label class="form-check-label">All dancers</label>
+              </div>-->
+            </h4>
+            <!--<input type="button" class="btn btn-primary linea" id="SelectedDancers" value="Dancers Selected">-->
+            <a class="btn btn-primary linea" id="SelectedWeb" role="button">Web Selected</a>
+            <a href="/new_movement" class="btn btn-primary linea" id="Continue" role="button">Continue New Movement</a>
+          </div>
+
+          <div class="col">
+            <!--Segunda de tres--> 
+            {% for pagina in web %}
+              <tr>
+                <h4>
+                  <div class="form-check">
+                    <input class="form-check-input web_page" type="radio" value="{{ pagina }}" name="{{ pagina }}" id="{{ pagina }}">
+                    <label class="form-check-label">
+                    {{ pagina }}
+                    </label>
+                  </div>
+                </h4>
+              </tr>
+            {% endfor %}
+          </div>
+
+          <!--<div class="col">
+            {% for girls in dancers_f %}
+              <tr>
+                <h4>
+                  <div class="form-check">              
+                    <input class="form-check-input female" type="radio" value="{{ girls }}" name="{{ girls }}" id="{{ girls }}">
+                    <label class="form-check-label">
+                    {{ girls }}
+                    </label>
+                  </div>
+                </h4>
+              </tr>
+            {% endfor %}
+          </div>-->
+        </div>
+      </div>
+
+  </body>
+</html>
+
+  <!------------------------------------ como poner checkbox e interpretarlos --------------------------------------------->
+  <!-- la información salió de: https://programandoointentandolo.com/2016/03/comprobar-checkbox-seleccionados-jquery.html-->
+  <script>
+
+  </script>
+
+  <!------------------------------------ como poner checkbox e interpretarlos --------------------------------------------->
+  <!-- la información salió de: https://programandoointentandolo.com/2016/03/comprobar-checkbox-seleccionados-jquery.html-->
+
+<script>
+
+var llamarAjax = function(web_seleccionada){
+    //Aquí declaras el objeto que pasarás como parámetro
+
+    const dict_values = {web_seleccionada}
+    const s = JSON.stringify(dict_values);
+    console.log(s);
+
+    var ajax = {};
+    ajax.url = '/web_new_movement';
+    ajax.method = 'POST';
+    ajax.contentType = "application/json";
+    ajax.data = JSON.stringify(s);
+    ajax.success = function(respuesta){
+      console.log(respuesta);
+      //Inclusive puedes volver a invocar otro ajax
+      //llamarAjax();
+    };
+    ajax.error = function(xhr,err){
+     //Aquí mandará error por que no está permitido el uso de AJAX en snippets
+      console.log(err);
+    };  
+    //Aquí pasas el objeto AJAX
+    $.ajax(ajax);
+  }  
+
+$(document).ready(function() {
+  $('#SelectedWeb').show(); //muestro mediante id
+	$('#Continue').hide();
+
+  //var bailarines_seleccionados = new Array();
+
+  //$("#All_dancers").prop("checked", true);
+  //$(".case").prop("checked", true);
+
+  /*$("#All_dancers").on("click", function() {
+    $(".case").prop("checked", this.checked); //todos los checkbox forman parte de la class case
+  });*/
+
+  // if all checkbox are selected, check the selectall checkbox and viceversa
+/*  $(".case").on("click", function() {
+    if ($(".case").length == $(".case:checked").length) {   //todos los checkbox forman parte de la class case
+      $("#All_dancers").prop("checked", true);
+    } else {
+      $("#All_dancers").prop("checked", false);
+    }
+  });*/
+
+  //Conseguir que sólo un radio button esté pulsado en el caso de los bailarines y uno en el caso de las bailarinas
+  $(".web_page").on("click", function() {
+    $(".web_page").prop("checked", false);  //todos los radio event a unchecked
+    $(this).prop('checked','checked');  //se pone a checked el radio event pulsado
+  });
+
+  /*$(".female").on("click", function() {
+    $(".female").prop("checked", false); //todos los radio female a unchecked
+    $(this).prop('checked','checked');   //se pone a checked el radio female pulsado 
+  });     */             
+
+  // Pulsando el botón SelectedDances se comprueba los checkbox seleccionados
+  $('#SelectedWeb').on('click', function() {
+
+    var web_seleccionada = new Array();
+    //$('input[type=checkbox]:checked').each(function() {
+    $('input[type=radio]:checked').each(function() { //en el array bailarines seleccionados se une el bailarín y la bailarina
+      web_seleccionada.push($(this).val());
+    });
+    alert("Web seleccionado => " + web_seleccionada[0]); //+ ' ' +bailarines_seleccionados[1]);
+    //alert(bailarines_seleccionados.length)
+    if (web_seleccionada.length === 1){
+      alert("estic dintre ");
+      $('#SelectedWeb').hide(); 
+      $('#Continue').show();
+      llamarAjax(web_seleccionada)
+    } else {
+        alert("Please, select web");
+        /*if (bailarines_seleccionados[0] === 'undefined'){
+          alert("Falta seleccionar un bailarín");
+        } else {
+          if (bailarines_seleccionados[1] === 'undefined'){
+            alert("Falta seleccionar una bailarina");  
+          } else {
+           alert("Falta seleccionar un bailarín y una bailarina");
+          }
+        }*/
+    }
+  })
+  
+    
+    //para poder pasar una varioable de jquery a python usando json y ajax
+    //la información se sacó de: https://dataanalyticsireland.ie/es/2021/12/13/how-to-pass-a-javascript-variable-to-python-using-json/
+ /*  const dict_values = {bailarines_seleccionados}
+    const s = JSON.stringify(dict_values);
+    console.log(s);
+ 
+    //window.alert(s)
+    
+    $.ajax({
+      url:"/dancers_new_movement",
+      type:"POST",
+      contentType: "application/json",
+      data: JSON.stringify(s)});                        
+    });*/
+
+  
+
+
+});
+</script>
+
+{% endblock %}

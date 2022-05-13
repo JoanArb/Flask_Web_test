@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+      /* styles unrelated to zoom */
+      * { border:0; margin:0; padding:0; }
+      p { position:absolute; top:3px; right:28px; color:#555; font:bold 13px/1 sans-serif;}
+  
+      /* these styles are for the demo, but are not required for the plugin */
+      .zoom {
+        display:inline-block;
+        position: relative;
+      }
+      
+      /* magnifying glass icon */
+    /*  .zoom:after {
+        content:'';
+        display:block; 
+        width:33px; 
+        height:33px; 
+        position:absolute; 
+        top:0;
+        right:0;
+        background:url(static/images/icon.png);
+      }*/
+  
+      .zoom img {
+        display: block;
+      }
+  
+      .zoom img::selection { background-color: transparent; }
+  
+      #ex2 img:hover { cursor: url(grab.cur), default; }
+      #ex2 img:active { cursor: url(grabbed.cur), default; }
+
+    </style>
+    <style>
+      .label_titol {
+          color: #0505ff;
+      }
+    </style>
+    <style>
+      .bottom-aligned {   /* para alinear el texto en la parte de abajo */
+        display: flex;
+        align-items: flex-end;
+      }
+    </style>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+    <script src='static/js/jquery.zoom.js'></script>
+    <script>
+      $(document).ready(function(){
+        //$('#ex1').zoom();
+        //$('#ex2').zoom({ on:'grab' });
+        //$('#ex3').zoom({ on:'click' });			 
+        //$('#ex4').zoom({ on:'toggle' });
+        $('.zoom').zoom();
+      });
+    </script>
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+  </head>
+  <body>   
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 bottom-aligned"> <!-- para alinear el texto en la parte de abajo -->
+          <h5 class="label_titol fw-bold text-center py-0">choose a move start position... &nbsp;&nbsp; to create a figure</h5>
+        </div>
+
+        <!--<div class="col-md-2"></div>-->
+
+        <div class="col-md-2">
+          <div class="card mb-3 p-4 rounded-end">
+            <img src="../static/images/original_colors.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="container">
+      <div class="row">
+        
+        {% for pose in poses %}
+        <div class="col-md-3">         
+          <div class="card mt-2 rounded-end">                 
+            <!--<img src="static/uploads/positions/{{ pose }}"/>-->
+            <div class='zoom' id='ex3'>
+              <img src='static/uploads/positions/{{ pose }}' width='300' height='200' alt=''/>              
+	          </div>
+
+            <!--<div class="card-body"> 
+              <td><h6>{{num_mov[poses.index(pose)]}} different videos</h6></td>          
+              <a href="/search_fig/{{ pose }}" id="" class="btn btn-primary btn-sm" role="button">{{ pose }}</a>
+            </div> -->
+            
+            <div class="p-1">
+              <!--<p>{{num_mov[poses.index(pose)]}} different videos</p>--><!--manera de recorrer un for usando el índice-->
+              <h6>{{ num_mov[poses.index(pose)]}}/{{tot_mov}}</h6>
+            </div>
+            <div class="d-grid">              
+              <button type="submit" onclick="window.location.href='/search_fig/{{ pose }}'" class="btn btn-primary">{{pose}}</button>
+            </div> 
+
+          </div>
+        </div>        
+        {% endfor %} 
+
+      </div>
+    </div>
+  </body> 
+</html>
+
+{% endblock %}

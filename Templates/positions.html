@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+      .label_titol {
+          color: #0505ff;
+      }
+    </style>
+    <style>
+      .bottom-aligned {   /* para alinear el texto en la parte de abajo */
+        display: flex;
+        align-items: flex-end;
+      }
+    </style>
+
+
+ 
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    -->
+  </head>
+  <body>    
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 bottom-aligned"> <!-- para alinear el texto en la parte de abajo -->
+          <h5 class="label_titol fw-bold text-center py-0">choose a move start position... &nbsp;&nbsp; to find different moves with different endings</h5>
+        </div>
+
+        <!--<div class="col-md-2"></div>-->
+
+        <div class="col-md-2">
+          <div class="card mb-3 p-4 rounded-end">
+            <img src="../static/images/original_colors.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        
+        {% for pose in poses %}       
+        <div class="col-md-3 col-xs-12 col-sm-6">         
+          <div class="card mt-2 rounded-end">                          
+
+            <div class='zoom' id='ex3'>
+              <!--<p>{{pose}}</p>-->
+              <img src='static/uploads/positions/{{ pose }}' width='300' height='200' alt=''/>              
+	          </div>
+            
+            <div class="p-1">
+              <!--<p>{{num_mov[poses.index(pose)]}} different videos</p>--><!--manera de recorrer un for usando el índice-->
+              <h6>{{ num_mov[poses.index(pose)]}}/{{tot_mov}}</h6>
+            </div>
+            <div class="d-grid">              
+              <button type="submit" onclick="window.location.href='/search/{{ pose }}'" class="btn btn-primary">{{pose}}</button>
+            </div>     
+          </div>
+        </div>        
+        {% endfor %} 
+
+      </div>
+    </div>
+  </body> 
+</html>
+
+
+{% endblock %}

@@ -1,0 +1,379 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<style>
+    .label_titol {
+        color: #0505ff;
+    }
+    .texto {
+        font-size: 12px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-7">
+
+        <!-- código para escribir en pantalla los mensajes flash que se envían en la aplicación flask_web-->
+        {% with messages = get_flashed_messages() %}  <!-- get_flashed_messages() sirve para capturar mensajes flash -->
+        {% if messages %}
+        {% for message in messages %}   
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }} 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+          <!--<table>
+            <thead>-->
+                <!-- formulario para rellenar la tabla movements de la base de datos salsa-->
+              <!--<form action="/add_mov_ext" method='POST'>-->
+
+                
+            <label class="label_titol">Movement Info</label>                
+            <div class="row">                               
+                <div class="col-md-4">
+                    <input type="text" id="link" name="name" placeholder="Movement video link" class="form-control" value="{{ vid }}">
+                </div>   
+                <div class="col-md-4">
+                    <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="{{ title }}"> 
+                </div>                
+                <div class="col-md-4 mt-1">
+                    <!--<a href="/ver_video" class="btn btn-sm btn-success">Check video</a>-->
+                    <input type="button" class="btn btn-sm btn-success" id="vid_mov" value="Check video">
+                </div> 
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <video id="myVideo" name="myVideo" width="320" height="240" controls><source src="{{ vid + title }}" type="video/mp4"></video>
+                </div>
+                <div class="col-md-2">
+                    <input type="text_2" name="sec_video" placeholder="sec video" class="form-control" id="sec_video" value="{{ sec_video }}">
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="start_movement" placeholder="start movement" class="form-control" value="{{ mov_s }}">
+                    <!--<td><a id="start_mov" class="btn btn-sm btn-danger">Select how movement begins</a></td>-->
+                </div>
+                <div class="col-md-4">
+                    <a href="/positions_begin" class="btn btn-sm btn-success mt-1">Select how movement begins</a>
+                    <!--<td><input type="button" class="btn btn-primary linea" id="positionsbegin" value="Select how movement begins"></td>-->
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="end_movement" placeholder="end movement" class="form-control" value="{{ mov_e }}"></td>
+                </div>
+                <div class="col-md-4">
+                    <a href="/positions_end" class="btn btn-sm btn-success mt-1">Select how movement ends</a>
+                </div>
+            </div>            
+            
+            <label class="label_titol">Dancers and location Info</label>
+            <div class="row">                   
+                <div class="col-md-4">                  
+                    <input type="text" name="dancer_f" placeholder="Female dancer" class="form-control" value="{{ elena }}">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="dancer_m" placeholder="Male dancer" class="form-control" value="{{ mariano }}">
+                </div>
+                <div class="col-md-4">
+                    <a href="/dancers_insert" class="btn btn-sm btn-success mt-1">Select dancers</a>
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="info_dancer_f" placeholder="Info female dancer" class="form-control" value="{{ info_f_d }}">
+                </div>
+                <div class="col-md-4 mt-2 texto">
+                    Instagram, Facebook, web, ...
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="info_dancer_m" placeholder="Info male dancer" class="form-control" value="{{ info_m_d }}">
+                </div>
+                <div class="col-md-4 mt-2 texto">
+                    Instagram, Facebook, web,...
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="place" placeholder="Event, pub, city,.." class="form-control" value="{{ loc }}">
+                </div>
+                <div class="col-md-4">
+                    <a href="/location_insert" class="btn btn-sm btn-success mt-1">Select location</a>
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="info_place" placeholder="Info event, pub, city,.." class="form-control" value="{{ info_loc }}">
+                </div>
+                <div class="col-md-4 mt-2 texto">
+                    Instagram, Facebook, web,...
+                </div>
+            </div>
+
+            <label class="label_titol mt-2">Original video info</label>
+
+            <div class="row">                   
+                <div class="col-md-8">
+                    <input type="text" name="orig_video" id="original_video" placeholder="Original video" class="form-control" value="{{ v_ori }}">
+                </div>
+
+                <div class="col-md-4 mt-1">
+                    <!--<td><a href="/ver_video" class="btn btn-sm btn-success">Ver video</a></td>-->
+                    <input type="button" class="btn btn-sm btn-success" id="vid_orig" value="Check video">
+                </div>
+            </div>
+
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="web_video" placeholder="Web original video" class="form-control" value="{{ web_orig }}">
+                </div>
+                <div class="col-md-4 mt-1">
+                    <a href="/web_insert" class="btn btn-sm btn-success mt-1">Select videographer</a>    
+                </div>
+            </div>
+            <div class="row mt-1">                   
+                <div class="col-md-8">
+                    <input type="text" name="i_web_video" placeholder="info web original video" class="form-control" value="{{ info_web_orig }}">                
+                </div>
+                <div class="col-md-4 mt-2 texto">
+                    Instagram, Facebook, web,...    
+                </div>
+            </div>
+            <div class="row mt-2 mb-2">
+                <div class="col-md-4">
+                    <input type="radio" name="radio-1" class="form-check-input" id="radio-1" value="social">
+                    <label  class="form-check-label" for="radio-1">Social Dance</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="radio" name="radio-1" class="form-check-input"  id="radio-2" value="workshop">
+                    <label class="form-check-label ruta" for="radio-2">Workshop</label>
+                </div>
+            </div>
+
+            <div class="row">                   
+                <div class="col-md-6 d-grid">                    
+                    <input type="button" class="btn btn-primary linea" id="Salvar" value="Save">
+                </div>
+                <div class="col-md-6 d-grid">
+                    <a href="/new_movement_cancel" class="btn btn-primary">Reset</a>
+                </div>
+            </div>
+              <!--</form>-->
+            <!--</thead>
+          </table>-->
+        </div>
+    </div>
+    <div class="col-md-5">
+            <!-- formulario para rellenar la tabla movements de la base de datos salsa-->
+            <!--<form action="/add_mov" method='POST'>
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Video link" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="title" placeholder="Title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="begin" placeholder="Begin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="end" placeholder="End" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_m" placeholder="Dancer male" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="dancer_f" placeholder="Dancer female" class="form-control">
+                </div>                
+                <div class="form-group">
+                    <input type="text" name="place" placeholder="Location" class="form-control">
+                </div>               
+                <div class="form-group">
+                    <input type="text" name="orig_video" placeholder="Original video" class="form-control">
+                </div>    
+                <div class="form-group">            
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Save
+                    </button>
+                </div>
+            </form>-->
+            
+            <img src="static/uploads/positions/{{ mov_s }}.png" width="494" height="326">
+            <img src="static/uploads/positions/{{ mov_e }}.png" width="494" height="326" class="mt-1">
+    </div>
+</div>
+
+
+<script>
+
+var llamarAjax = function(var1,const1){
+    //Aquí declaras el objeto que pasarás como parámetro
+
+    //const dict_values = {bailarines_seleccionados}
+    const dict_values = {var1}
+    const s = JSON.stringify(dict_values);
+    console.log(s);
+
+    var ajax = {};
+    //ajax.url = '/dancers_new_movement';
+    ajax.url = const1;
+    ajax.method = 'POST';
+    ajax.contentType = "application/json";
+    ajax.data = JSON.stringify(s);
+    ajax.success = function(respuesta){
+      console.log(respuesta);
+      //Inclusive puedes volver a invocar otro ajax
+      //llamarAjax();
+    };
+    ajax.error = function(xhr,err){
+     //Aquí mandará error por que no está permitido el uso de AJAX en snippets
+      console.log(err);
+    };   
+    //Aquí pasas el objeto AJAX
+    $.ajax(ajax);
+  }  
+
+//sirve para contar los segundos que dura un vídeo. Pero, no consigo que cargue un nuevo vídeo si no actualizo. Tampoco funciona
+//para vídeos de youtube
+var DuracionVideo = function(){    
+    var x = document.getElementById("myVideo");
+    alert(x.duration);
+    document.getElementById("sec_video").value = x.duration;    
+}
+
+/*function onTrackedVideoFrame(currentTime, duration){
+    $("#curr_video").text(currentTime); //Change #current to currentTime 
+    $("#sec_video").text(duration) 
+}*/
+
+var DuracionVideo2 = function(){  
+    var newmp4 = $('input:text[name=name]').val() + $('input:text[name=title]').val(); 
+    $('#myVideo').get(0).pause();
+    $('#myVideo').attr('src', newmp4);
+    $('#myVideo').get(0).load();
+    $('#myVideo').get(0).play();
+    $('#myVideo').get(0).duration;
+    alert($('#myVideo').get(0).duration);
+    //alert($('#myVideo'))
+
+    //var x = document.getElementById("myVideo");
+    //alert(x.duration);
+
+}
+
+$(document).ready(function() {
+
+    //$("#myVideo").hide();
+    
+    Marcar_Componente_Radio();
+
+    //Al pulsar cualquier button a excepción del Save,... sirve para guardar todos los campos rellenos del formulario al refrescar la página
+    $('.btn').on('click', function() {       
+        var nou_moviment = new Array();    
+        $('input[type=text]').each(function() {
+            nou_moviment.push($(this).val());
+        });      
+        $('input[type=radio]:checked').each(function() { //:checked permite que sólo se añada el radio seleccionado
+            nou_moviment.push($(this).val());
+        });
+        $('input[type=text_2]').each(function() {
+            nou_moviment.push($(this).val());
+        });
+        llamarAjax(nou_moviment,"/new_movement_in") 
+        alert(nou_moviment)        
+    });
+
+    //Enviar los inputs de tipo text a la base de datos al pulsar el botón (input) Save
+    $('#Salvar').on('click', function() {       
+        var nou_moviment = new Array();    
+        $('input[type=text]').each(function() {
+            nou_moviment.push($(this).val());
+        });
+        $('input[type=radio]:checked').each(function() { //:checked permite que sólo se añada el radio seleccionado
+            nou_moviment.push($(this).val());
+        });
+        $('input[type=text_2]').each(function() {
+            nou_moviment.push($(this).val());
+        });
+        alert(nou_moviment)
+        llamarAjax(nou_moviment,"/new_movement_saved")                  
+    });
+
+    function Marcar_Componente_Radio() {
+        social_workshop = "{{social | safe}}";//como se trata de un string y no de un array, no hay el problema de los corchetes
+        //alert(social_workshop)
+        if (social_workshop == 'social') {
+            //alert('dins social')
+            //$('#radio1').prop('checked',true) 
+            $("input:radio[value='social']").prop('checked',true);
+        } else {
+            //alert('dins workshop')
+            //$('#radio2').prop('checked',true)
+            $("input:radio[value='workshop']").prop('checked',true);
+        }
+        
+        return 'tot bé'
+    }
+
+    $('#vid_orig').on('click', function() {
+        //alert($('input:text[name=orig_video]').val());
+        video=$('input:text[name=orig_video]').val();
+        alert(video)
+        if (video != "") {  //en el caso de que el edit del input orig_video esté vacío no se abre la ventana
+            window.open( video );
+        }   
+        //window.open( $(this).attr('href') );
+			return false;
+        //llamarVideo();
+    });
+
+    $('#vid_mov').on('click', function() {
+        //DatosVideo(); //no abre ficheros de youtube (y no sé cuáles más)
+        DuracionVideo();
+        //DuracionVideo2();
+
+        /*$("#myvideo").on( "timeupdate", function(event){ 
+            onTrackedVideoFrame(this.currentTime, this.duration); 
+        });*/
+        
+        setTimeout(function(){
+             //alert($('input:text[name=orig_video]').val());
+            titulo=$('input:text[name=title]').val();
+            if (titulo != "") {
+                video=$('input:text[name=name]').val() + $('input:text[name=title]').val();  
+            } else {
+                video=$('input:text[name=name]').val();    
+            }
+            //video=$('input:text[name=name]').val();
+            if (video != "") {  //en el caso de que el edit del input orig_video esté vacío no se abre la ventana
+                window.open( video );
+            }   
+            //window.open( $(this).attr('href') );
+			return false;
+        },1000)
+    });
+
+    /*$("#video-active").on( "timeupdate", function(event){ 
+        onTrackedVideoFrame(this.currentTime, this.duration); 
+    }); */
+    
+
+
+});
+</script>
+
+{% endblock %}

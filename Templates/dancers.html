@@ -1,0 +1,248 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        /*background: #FF2222;*/
+        color: #ccc;
+      } 
+      div {
+        padding: 2px 10px;
+      }
+      input[type="button"] {
+        margin-top: 10px;
+      }
+      .linea
+      {
+        display: inline-block;
+      } 
+    </style>
+
+    <style>
+    /*  body{
+        background: #ffe259;
+        background: linear-gradient(to right,#ffa751,#ffe259);
+      }
+      .bg{
+        background-image: url(../static/images/BG.png);
+        background-position: center center;
+      }*/
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.2.min.js"
+        integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
+        crossorigin="anonymous">
+    </script>
+      <!--<script type="text/javascript" src="comprobarCheckBox.js"></script>-->
+  </head>
+  <body>   
+ 
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-md-8">
+          <!-- el button Exit sobra ya que estamos en layout.html-->
+          <!--<a href="/" id="" class="btn btn-primary linea" role="button">Exit</a>-->
+          <a href="/" id="SelectedDancers" class="btn btn-primary linea" role="button">Select Dancers</a>
+          <!-- no es buena idea que el button sea un BACK, ya que iríamos a Positions sin que sucediera lo que sucede al pulsarlo-->
+          <!--<a href="javascript:history.back()" id="SelectedDancers" class="btn btn-primary linea" role="button">Back</a>-->
+
+
+          <!--<input type="button" class="btn btn-primary linea" id="SelectedDancers" value="Select Dancers and Exit">--> 
+          <h5 class="label_titol mt-4">choose dancers...</h5>
+          
+          <div class="container mt-2">
+            <div class="row">
+           
+              <div class="col-md-4">
+                <h6>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="All_dancers" name="" id="All_dancers">
+                    <label class="form-check-label">All dancers</label>
+                  </div>
+                </h6>
+
+                {% for boys in dancers_m %}
+                  <tr>
+                    <h6>
+                      <div class="form-check ms-4">
+                        <input class="form-check-input case" type="checkbox" value="{{ boys }}" name="{{ boys }}" id="{{ boys }}">
+                        <label class="form-check-label">
+                          {{ boys }}
+                        </label>
+                      </div>
+                    </h6>
+                  </tr>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-4 mt-4">
+                <div class="mt-1">
+                {% for girls in dancers_f %}
+                  <tr>
+                    <h6>
+                      <div class="form-check">
+                        <input class="form-check-input case" type="checkbox" value="{{ girls }}" name="{{ girls }}" id="{{ girls }}">
+                        <label class="form-check-label">
+                          {{ girls }}
+                        </label>
+                      </div>
+                    </h6>
+                  </tr>
+                {% endfor %}
+              </div>
+              </div>
+
+              <div class="col-md-4">            
+                <h6>
+                  <!--<div class="form-check ms-4">
+                    <input class="form-check-input" type="checkbox" value="All_dancers" name="" id="All_dancers">
+                    <label class="form-check-label">All dancers</label>
+                  </div>-->
+                  <div class="form-check">
+                    <input type="radio" name="radio-1" class="form-check-input" id="radio-3" value="Both">
+                    <label class="form-check-label ruta" for="radio-3">Both</label>
+                  </div>
+                  <div class="form-check ms-4">
+                    <input type="radio" name="radio-1" class="form-check-input" id="radio-1" value="Social">
+                    <label  class="form-check-label" for="radio-1">Social Dance</label>
+                  </div>
+                  <div class="form-check ms-4">
+                    <input type="radio" name="radio-1" class="form-check-input" id="radio-2" value="Workshop">
+                    <label class="form-check-label ruta" for="radio-2">Workshop</label>
+                  </div>
+                  
+                </h6>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+            <!--<div class="container w-75 bg-primary mt-1 rounded shadow">--> 
+              <!--<div class="row align-items-stretch">-->
+                  <!--<div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">-->
+          <div class="container w-100 col-md-5 col-lg-5 col-xl-6 rounded shadow card bg-primary p-1">
+            <img src='../static/images/BG.png'/>         
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
+
+  <!------------------------------------ como poner checkbox e interpretarlos --------------------------------------------->
+  <!-- la información salió de: https://programandoointentandolo.com/2016/03/comprobar-checkbox-seleccionados-jquery.html-->
+  <script>
+/*    $(document).ready(function() {
+  
+      // Comprobacion usando .prop() (jQuery > 1.6)
+      if ($('#Others').prop('checked') ) {
+        console.log("Checkbox seleccionado");
+      }
+  
+      // Comprobacion usando .attr() (jQuery < 1.6)
+      if ($('#Others').attr('checked') ) {
+        console.log("Checkbox seleccionado");
+      }
+  
+      // Comprobacion usando funcion .is()
+      if ($('#Others').is(':checked') ) {
+        console.log("Checkbox seleccionado");
+      }
+  
+      // Comprobar cuando se deseleciona un checkbox
+      $('input[type=checkbox]:checked').on('change', function() {
+        console.log("Checkbox " + $(this).prop("id") +  " (" + $(this).val() + ") => Deseleccionado");
+      });
+  
+      // Comprobar los checkbox seleccionados
+      $('#SelectedDancers').on('click', function() {  
+        var bailarines_seleccionados = new Array();
+  
+        $('input[type=checkbox]:checked').each(function() {
+          bailarines_seleccionados.push($(this).val());
+        });
+
+        //para poder pasar una varioable de jquery a python usando json y ajax
+        //la información se sacó de: https://dataanalyticsireland.ie/es/2021/12/13/how-to-pass-a-javascript-variable-to-python-using-json/
+        const dict_values = {bailarines_seleccionados}
+        const s = JSON.stringify(dict_values);
+        console.log(s);
+
+        window.alert(s)
+        $.ajax({
+            url:"/dancers_selected",
+            type:"POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)});                        
+      });  
+    });  */
+  </script>
+
+  <!------------------------------------ como poner checkbox e interpretarlos --------------------------------------------->
+  <!-- la información salió de: https://programandoointentandolo.com/2016/03/comprobar-checkbox-seleccionados-jquery.html-->
+
+<script>
+$(document).ready(function() {
+
+  $("#All_dancers").prop("checked", true);
+  $(".case").prop("checked", true);
+
+  $("#All_dancers").on("click", function() {
+    $(".case").prop("checked", this.checked); //todos los checkbox forman parte de la class case
+  });
+
+  // if all checkbox are selected, check the selectall checkbox and viceversa
+  $(".case").on("click", function() {
+    if ($(".case").length == $(".case:checked").length) {   //todos los checkbox forman parte de la class case
+      $("#All_dancers").prop("checked", true);
+    } else {
+      $("#All_dancers").prop("checked", false);
+    }
+  });
+
+  $("#radio-3").attr('checked', true); //al cargarse la página dancers.html se pone el check al radio-3 que corresponde a both
+
+  // Comprobar los checkbox seleccionados
+  $('#SelectedDancers').on('click', function() {
+
+    var bailarines_seleccionados = new Array(); //definir el array de los bailarines seleccionados
+
+    //Añadir los bailarines seleccionados al array
+    $('input[type=checkbox]:checked').each(function() {
+      bailarines_seleccionados.push($(this).val());
+    });
+
+    //Añadir a la lista de los bailarines seleccionados, qué tipo de vídeo se carga social, workshop o de ambos
+    $('input[type=radio]:checked').each(function() {
+      bailarines_seleccionados.push($(this).val());
+    });
+    //alert("Bailarines seleccionados => " + bailarines_seleccionados);
+  
+    //para poder pasar una varioable de jquery a python usando json y ajax
+    //la información se sacó de: https://dataanalyticsireland.ie/es/2021/12/13/how-to-pass-a-javascript-variable-to-python-using-json/
+    const dict_values = {bailarines_seleccionados}
+    const s = JSON.stringify(dict_values);
+    console.log(s);
+
+    window.alert(s)
+    $.ajax({
+      url:"/dancers_selected",
+      type:"POST",
+      contentType: "application/json",
+      data: JSON.stringify(s)});                        
+
+  });
+});
+</script>
+
+{% endblock %}
